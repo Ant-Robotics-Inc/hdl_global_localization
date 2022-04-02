@@ -55,22 +55,21 @@ public:
       ROS_INFO_STREAM("Failed to find a global localization solution");
       return;
     }
-
+    
     const auto& estimated = srv.response.poses[0];
     Eigen::Quaternionf quat(estimated.orientation.w, estimated.orientation.x, estimated.orientation.y, estimated.orientation.z);
     Eigen::Vector3f trans(estimated.position.x, estimated.position.y, estimated.position.z);
-
     Eigen::Isometry3f transformation = Eigen::Isometry3f::Identity();
+
     transformation.linear() = quat.toRotationMatrix();
     transformation.translation() = trans;
-
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
-    pcl::fromROSMsg(*cloud_msg, *cloud);
 
+    pcl::fromROSMsg(*cloud_msg, *cloud);
     pcl::PointCloud<pcl::PointXYZ>::Ptr transformed(new pcl::PointCloud<pcl::PointXYZ>);
     pcl::transformPointCloud(*cloud, *transformed, transformation);
-    transformed->header.frame_id = "map";
 
+    transformed->header.frame_id = "map";
     points_pub.publish(transformed);
   }
 
@@ -79,9 +78,7 @@ private:
   ros::ServiceClient set_engine_service;
   ros::ServiceClient set_global_map_service;
   ros::ServiceClient query_service;
-
   ros::Publisher globalmap_pub;
-
   ros::Publisher points_pub;
   ros::Subscriber points_sub;
 };

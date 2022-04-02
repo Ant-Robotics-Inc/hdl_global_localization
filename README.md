@@ -4,6 +4,18 @@
 
 [![Build Status](https://travis-ci.org/koide3/hdl_global_localization.svg?branch=master)](https://travis-ci.org/koide3/hdl_global_localization) on ROS melodic and noetic
 
+## Install deps
+
+[!Teaser++](https://teaser.readthedocs.io/en/master/installation.html#supported-platforms)
+
+
+## BUILD
+added in ~/.bashrc
+
+```
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib/
+```
+
 ## Requirements
 ***hdl_global_localization*** requires the following libraries:
 - PCL
