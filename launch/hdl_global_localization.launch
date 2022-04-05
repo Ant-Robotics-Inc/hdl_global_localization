@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <launch>
+
+  <arg name="output" default="/home/op/Desktop/LOAM/GlobalMap.pcd 5.0 _name:=global_node cloud_pcd:=/global_map _frame_id:=map" />
+
+  <node pkg="pcl_ros" type="pcd_to_pointcloud" name="load_global_map_node" args="$(arg output)" />
+
   <!-- load params -->
   <rosparam command="load" file="$(find hdl_global_localization)/config/general_config.yaml" ns="/hdl_global_localization" />
   <rosparam command="load" file="$(find hdl_global_localization)/config/bbs_config.yaml" ns="/hdl_global_localization" />
@@ -7,6 +12,12 @@
   <rosparam command="load" file="$(find hdl_global_localization)/config/ransac_config.yaml" ns="/hdl_global_localization" />
   <rosparam command="load" file="$(find hdl_global_localization)/config/teaser_config.yaml" ns="/hdl_global_localization" />
 
+  <node pkg="hdl_global_localization" type="hdl_global_localization_node" name="hdl_global_localization" output="screen" respawn="true"/>
 
-  <node pkg="hdl_global_localization" type="hdl_global_localization_node" name="hdl_global_localization" output="screen" />
+  <node pkg="hdl_global_localization" type="map_relocalization.py" name="map_relocalization_node" output="screen" respawn="true">
+		<param name="frame_id" value="map" />
+		<param name="child_id" value="map_slam" />
+		<param name="rate" value="100" />
+	</node>
+
 </launch>

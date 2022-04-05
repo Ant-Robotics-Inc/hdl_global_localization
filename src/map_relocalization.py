@@ -3,7 +3,7 @@
 
 
 """
-Ros node for control relocalisation hdl slam method
+Ros node for control relocalization hdl slam method
 """
 
 import re
@@ -104,16 +104,25 @@ def set_tf_transform(event):
 
 if __name__ == '__main__':
 
-    rospy.init_node('relocalisation_node', anonymous=True)
+    rospy.init_node('map_relocalization_node', anonymous=True)
 
     broadcaster = tf2_ros.StaticTransformBroadcaster()
     static_transformStamped = geometry_msgs.msg.TransformStamped()
 
+    frame_id = "map" 
+    child_id =  "map_slam"
+    rate = 100.
+
+    # init params
+    frame_id = rospy.get_param("~frame_id", frame_id)
+    child_id = rospy.get_param("~child_id", child_id)
+    rate = rospy.get_param("~rate", rate)
+
+    # init topics and service
     rospy.Subscriber("/global_map", PointCloud2, global_cloud_clb)
     rospy.Subscriber("/lio_sam/mapping/map_local", PointCloud2, local_cloud_clb)
-    s = rospy.Service('/relocalisation/set', Trigger, set_localisation)
-
-    rospy.Timer(rospy.Duration(1./100.), set_tf_transform)
+    rospy.Timer(rospy.Duration(1./rate), set_tf_transform)
+    s = rospy.Service('/relocalize', Trigger, set_localisation)
 
     rospy.spin()
 

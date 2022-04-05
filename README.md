@@ -1,3 +1,29 @@
+# map_relocalistion
+The ROS node for working with hdl_global_localization
+
+
+#### Subscribed Topics:
+ global_map ([sensor_msgs/PointCloud2](http://docs.ros.org/api/sensor_msgs/html/msg/PointCloud2.html)): Topic of global map.<br/>
+ /lio_sam/mapping/map_local ([sensor_msgs/PointCloud2](http://docs.ros.org/api/sensor_msgs/html/msg/PointCloud2.html)): Topic of current map.<br/>
+ 
+ Publisher Topics:
+
+tf2 ([geometry_msgs/TransformStamped](http://docs.ros.org/api/geometry_msgs/html/msg/TransformStamped.html)): Tf2 publish frames: frame_id -> child_id <br/> 
+
+#### Services:
+
+relocalize ([std_srvs/Trigger](http://docs.ros.org/en/api/std_srvs/html/srv/Trigger.html): Service to manually run relocalization. <br/> 
+
+
+#### Parameters:
+
+~rate (float, default: 100)<br/>
+&emsp;&emsp;*Frame rate of TF publiser<br/>*
+~frame_id (string, default: "map")<br/>
+&emsp;&emsp;*Name of parent TF.<br/>*
+~child_id (string, default: "map_slam")<br/>
+&emsp;&emsp;*frame of child TF.<br/>*
+
 # hdl_global_localization
 
 ![hdl_global_localization](https://user-images.githubusercontent.com/31344317/105116113-71fc6180-5b0d-11eb-9d85-bbea922dde84.gif)
