@@ -1,4 +1,4 @@
-# map_relocalistion
+# map_relocalization
 The ROS node for working with hdl_global_localization
 
 
