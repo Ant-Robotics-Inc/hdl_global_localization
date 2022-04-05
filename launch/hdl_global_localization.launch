@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="output" default="/home/op/Desktop/LOAM/GlobalMap.pcd 5.0 _name:=global_node cloud_pcd:=/global_map _frame_id:=map" />
+  <arg name="output" default="/home/nav/maps/GlobalMap.pcd 5.0 _name:=global_node cloud_pcd:=/global_map _frame_id:=map" />
 
   <node pkg="pcl_ros" type="pcd_to_pointcloud" name="load_global_map_node" args="$(arg output)" />
 
